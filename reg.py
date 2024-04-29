@@ -1,9 +1,10 @@
 import random
 import operator
 import sys
+name = None
 
-
-def pozdrav():
+def inputName():
+    global name
     print("Pozdravljen!\n")
     while True:
         name = (input("Vnesi svoje ime:\n"))
@@ -14,9 +15,7 @@ def pozdrav():
             print("Pozdravljen/a", name)
             break
 
-
-pozdrav()
-
+inputName()
 
 def randomCalc():
     ops = {'+': operator.add,
@@ -31,53 +30,36 @@ def randomCalc():
     return odgovor
 
 
-def odgovor1(odgovor):
+def checkResponse(odgovor):
     while True:
         if odgovor == True:
             print("Pravilno!")
             print("Bi ponovno poskusil?\n")
             break
         else:
-            print("Napaèno")
+            print("Napačno")
             print("Bi ponovno poskusil?\n")
             break
 
 
-def askQuestion():
+def handleResponse():
     odgovor = randomCalc()
     guess = float(input("Ugani? "))
-    odgovor1(guess == odgovor)
+    checkResponse(guess == odgovor)
 
 
-def dovoljenje():
-    print("Si pripravljen za matematiko?\n")
-
+def gameLoop():
+    print(name + ", si pripravljen za matematiko?\n")
     while True:
         gameChoice = input("Da/Ne\n")
-
-        if gameChoice == "Da":
+        if gameChoice in ["Da", "da", "d", "DA"]:
             print("To je fantasticno")
-            askQuestion()
-
-        elif gameChoice == "Ne":
-            print("Nasvidenje")
-            break
+            handleResponse()
+        elif gameChoice in ["Ne", "ne", "n", "NE"]:
+            print("Nasvidenje " + name)
+            sys.exit()
         else:
             print("Da ali Ne!?!??!?!?!??!?!?")
             continue
 
-
-dovoljenje()
-
-
-def odgovor2():
-    while True:
-        gameCHOICE = input("Da/Ne\n")
-
-        if gameCHOICE == "Da":
-            randomCalc()
-        else:
-            sys.exit()
-
-
-odgovor2()
+gameLoop()
